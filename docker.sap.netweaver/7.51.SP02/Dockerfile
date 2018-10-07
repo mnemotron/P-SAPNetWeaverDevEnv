@@ -11,24 +11,28 @@ FROM ubuntu:18.04
   # the SAP AS requires english as the operating system language (LANG=en_US.UTF-8)
 
 ## label
-LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS ABAP 7.5x Developer Edition" \
+LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS ABAP 7.51 SP02 Developer Edition" \
       docker.sap.netweaver.dockerfile.maintainer="mnemotron" \
       docker.sap.netweaver.dockerfile.version="1.0.0" \
       docker.sap.netweaver.dockerfile.date="08.10.2018" \
-      docker.sap.netweaver.description="SAP NetWeaver AS ABAP 7.5x Developer Edition" \
-      docker.sap.netweaver.version="7.5x"
+      docker.sap.netweaver.description="SAP NetWeaver AS ABAP 7.51 SP02 Developer Edition" \
+      docker.sap.netweaver.version="7.51 SP02"
 
 ## install tools/dependencies
-# csh         (c shell)
-# expect      (programmed dialogue with interactive programs)
-# libaio1     (linux kernel AIO access library, SAP Sybase ASE requires the library to start the installation)
-# locales...  (language settings)
+# csh          (c shell)
+# expect       (programmed dialogue with interactive programs)
+# iputils-ping (ping for host check)
+# libaio1      (linux kernel AIO access library, SAP Sybase ASE requires the library to start the installation)
+# locales...   (language settings)
+# net-tools    (contains ifconfig for host check)
 RUN apt-get update && \
     apt-get install -y \
       csh \
       expect \
+      iputils-ping \
       libaio1 \
-      locales locales-all
+      locales locales-all \
+      net-tools
 
 # install and run uuidd daemon
 # (universal unique identifiers (UUID) generation daemon, essential for creating database keys, see SAP Note 1310037)
@@ -69,6 +73,8 @@ RUN echo '#!/usr/bin/expect -f \n\
       spawn ./install.sh -s -k \n\
         set PASSWORD "pSAPNW" \n\
         set timeout -1 \n\
+      expect "Hot enter to continue!" \n\
+        send "\\r"
       expect "Do you agree to the above license terms? yes/no:" \n\
         send "yes\\r" \n\
       expect "Please enter a password:" \n\
