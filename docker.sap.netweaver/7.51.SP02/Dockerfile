@@ -20,7 +20,6 @@ LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS A
 
 ## install tools/dependencies
 # csh          (c shell)
-# expect       (programmed dialogue with interactive programs)
 # iputils-ping (ping for host check)
 # libaio1      (linux kernel AIO access library, SAP Sybase ASE requires the library to start the installation)
 # locales...   (language settings)
@@ -28,7 +27,6 @@ LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS A
 RUN apt-get update && \
     apt-get install -y \
       csh \
-      expect \
       iputils-ping \
       libaio1 \
       locales locales-all \
@@ -67,29 +65,8 @@ WORKDIR /tmp/sapnw
 # installation script must be executable
 RUN chmod +x install.sh
 
-# build enhanced installation script (based on expect)
-# password: pSAPNW
-RUN echo '#!/usr/bin/expect -f \n\
-      spawn ./install.sh -s -k \n\
-        set PASSWORD "pSAPNW" \n\
-        set timeout -1 \n\
-      expect "Hit enter to continue!" \n\
-        send "\\r"
-      expect "Do you agree to the above license terms? yes/no:" \n\
-        send "yes\\r" \n\
-      expect "Please enter a password:" \n\
-        send "$PASSWORD\\r" \n\
-      expect "Please re-enter password for verification:" \n\
-        send  "$PASSWORD\\r" \n\
-      expect eof' >> ./einstall.sh; chmod +x ./einstall.sh
-
-## run installation
-RUN ./einstall.sh
-
 ## clean
-RUN rm -rfd /tmp/sapnw && \
-    apt-get -y purge expect && \
-    apt-get -y clean && \
+RUN apt-get -y clean && \
     apt-get -y autoremove && \
     apt-get -y autoclean && \
     rm -rf /var/lib/apt/lists/*
