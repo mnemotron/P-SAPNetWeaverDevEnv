@@ -1,6 +1,6 @@
 ## parent image
 # ubuntu
-FROM ubuntu:18.04 
+FROM ubuntu:18.04
 
 ## information
 # preparation
@@ -11,12 +11,12 @@ FROM ubuntu:18.04
   # the SAP AS requires english as the operating system language (LANG=en_US.UTF-8)
 
 ## label
-LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS ABAP 7.51 SP02 Developer Edition" \
+LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS ABAP 7.5x Developer Edition" \
       docker.sap.netweaver.dockerfile.maintainer="mnemotron" \
       docker.sap.netweaver.dockerfile.version="1.0.0" \
       docker.sap.netweaver.dockerfile.date="08.10.2018" \
-      docker.sap.netweaver.description="SAP NetWeaver AS ABAP 7.51 SP02 Developer Edition" \
-      docker.sap.netweaver.version="7.51 SP02"
+      docker.sap.netweaver.description="SAP NetWeaver AS ABAP 7.5x Developer Edition" \
+      docker.sap.netweaver.version="7.5x"
 
 ## install tools/dependencies
 # csh         (c shell)
@@ -64,10 +64,10 @@ WORKDIR /tmp/sapnw
 RUN chmod +x install.sh
 
 # build enhanced installation script (based on expect)
-# password: pABAP751
-RUN echo $'#!/usr/bin/expect -f \n\
+# password: pSAPNW
+RUN echo '#!/usr/bin/expect -f \n\
       spawn ./install.sh -s -k \n\
-        set PASSWORD "pABAP751" \n\
+        set PASSWORD "pSAPNW" \n\
         set timeout -1 \n\
       expect "Do you agree to the above license terms? yes/no:" \n\
         send "yes\\r" \n\
