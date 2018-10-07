@@ -73,7 +73,7 @@ RUN echo '#!/usr/bin/expect -f \n\
       spawn ./install.sh -s -k \n\
         set PASSWORD "pSAPNW" \n\
         set timeout -1 \n\
-      expect "Hot enter to continue!" \n\
+      expect "Hit enter to continue!" \n\
         send "\\r"
       expect "Do you agree to the above license terms? yes/no:" \n\
         send "yes\\r" \n\
