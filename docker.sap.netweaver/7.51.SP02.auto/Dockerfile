@@ -11,7 +11,7 @@ FROM ubuntu:18.04
   # the SAP AS requires english as the operating system language (LANG=en_US.UTF-8)
 
 ## label
-LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS ABAP 7.51 SP02 Developer Edition" \
+LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS ABAP 7.51 SP02 Developer Edition - Automatic Installation" \
       docker.sap.netweaver.dockerfile.maintainer="mnemotron" \
       docker.sap.netweaver.dockerfile.version="1.0.0" \
       docker.sap.netweaver.dockerfile.date="08.10.2018" \
@@ -20,6 +20,7 @@ LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS A
 
 ## install tools/dependencies
 # csh          (c shell)
+# expect       (to automatically run through the SAP installation script)
 # iputils-ping (ping for host check)
 # libaio1      (linux kernel AIO access library, SAP Sybase ASE requires the library to start the installation)
 # locales...   (language settings)
@@ -27,6 +28,7 @@ LABEL docker.sap.netweaver.dockerfile.description="Docker for SAP NetWeaver AS A
 RUN apt-get update && \
     apt-get install -y \
       csh \
+      expect \
       iputils-ping \
       libaio1 \
       locales locales-all \
@@ -63,10 +65,18 @@ WORKDIR /tmp/sapnw
 
 ## prepare installation
 # installation script must be executable
-RUN chmod +x install.sh
+RUN chmod +x install.sh && \
+    sed -i 's/| more//g' ./install.sh
+
+## run enhanced installation script (based on expect)
+# password: pSAPNW
+RUN chmod +x einstall.exp &&\
+    ./einstall.exp
 
 ## clean
-RUN apt-get -y clean && \
+RUN apt-get purge expect && \
+    apt-get -y clean && \
     apt-get -y autoremove && \
     apt-get -y autoclean && \
+    rm -rf /tmp/sapnw && \
     rm -rf /var/lib/apt/lists/*
