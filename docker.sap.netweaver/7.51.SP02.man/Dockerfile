@@ -63,7 +63,7 @@ WORKDIR /tmp/sapnw
 
 ## prepare installation
 # installation script must be executable
-RUN chmod 755 install.sh
+RUN chmod +rx install.sh
 
 ## clean
 RUN apt-get -y clean && \
