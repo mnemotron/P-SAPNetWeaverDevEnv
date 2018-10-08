@@ -65,12 +65,12 @@ WORKDIR /tmp/sapnw
 
 ## prepare installation
 # installation script must be executable
-RUN chmod +x install.sh && \
+RUN chmod 755 install.sh && \
     sed -i 's/| more//g' ./install.sh
 
 ## run enhanced installation script (based on expect)
 # password: pSAPNW
-RUN chmod +x einstall.exp &&\
+RUN chmod 755 einstall.exp &&\
     ./einstall.exp
 
 ## clean
