@@ -9,7 +9,7 @@ docker build -t sapnw751sp02 .
 
 #### 2. Run Docker Image
 ```bash
-sudo docker run -i -t sapnw751sp02 /bin/bash
+sudo docker run -P --name sapnw751sp02 -i -t sapnw751sp02 /bin/bash
 ```
 
 #### 3. Install SAP NetWeaver
@@ -25,5 +25,5 @@ docker build -t sapnw751sp02 .
 
 #### 2. Run Docker Image
 ```bash
-sudo docker run -d -t sapnw751sp02
+sudo docker run -P --name sapnw751sp02 -d -t sapnw751sp02
 ```

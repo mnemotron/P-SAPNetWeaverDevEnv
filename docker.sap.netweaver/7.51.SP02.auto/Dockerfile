@@ -66,7 +66,7 @@ WORKDIR /tmp/sapnw
 ## prepare installation
 # installation script must be executable
 RUN chmod +rwx install.sh && \
-    sed -i 's/| more//g' ./install.sh
+    sed -i 's/cat ${dvd_drive}\/$1 | more//g' ./install.sh
 
 # build enhanced installation script (based on expect)
 # password: pSAPNW
@@ -74,18 +74,18 @@ RUN echo '#!/usr/bin/expect -f\n \
     spawn ./install.sh -s -k\n \
       set PASSWORD "pSAPNW"\n \
       set timeout -1\n \
-    expect "Hit enter to continue!"\n \
-      send "\\r" \
-    expect "Do you agree to the above license terms? yes/no:"\n \
-      send "yes\\r"\n \
-    expect "Please enter a password:"\n \
-      send "$PASSWORD\\r"\n \
-    expect "Please re-enter password for verification:"\n \
-      send  "$PASSWORD\\r"\n \
+    expect "Hostname check skipped!\r\nHit enter to continue!\r\n"\n \
+      send "\r"\n \
+    expect "Do you agree to the above license terms? yes/no:\r\n"\n \
+      send "yes\r"\n \
+    expect "Please enter a password:\r"\n \
+      send "$PASSWORD\r"\n \
+    expect "Please re-enter password for verification:\r"\n \
+      send  "$PASSWORD\r"\n \
     expect eof' >> ./einstall.sh; chmod +x ./einstall.sh
 
 ## run enhanced installation script
-RUN ./einstall.expp
+RUN ./einstall.sh
 
 ## clean
 RUN apt-get purge expect && \
