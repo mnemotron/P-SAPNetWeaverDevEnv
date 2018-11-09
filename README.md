@@ -6,12 +6,15 @@
 + Clone this git repository: SAPNetWeaverDevEnv
 
 #### 2. Download SAP NetWeaver
-+ Download the SAP NetWeaver:
-      [https://tools.hana.ondemand.com/#abap](https://tools.hana.ondemand.com/#abap "https://tools.hana.ondemand.com/#abap")
++ download the SAP NetWeaver:
+```
+[https://tools.hana.ondemand.com/#abap](https://tools.hana.ondemand.com/#abap "https://tools.hana.ondemand.com/#abap")
+```
 + unpack the downloaded RAR files
 + copy the unpacked files/folders into the following directory:
-      docker.sap.netweaver/7.51.SP02.opensuse.man/source
-
+```
+docker.sap.netweaver/7.51.SP02.opensuse.man/source
+```
 ### II. Docker
 
 #### 1. Build Docker Image
