@@ -3,13 +3,14 @@
 ### I. Preparations
 
 #### 1. Clone Git Repository
-    Clone this git repository: SAPNetWeaverDevEnv
++ Clone this git repository: SAPNetWeaverDevEnv
 
 #### 2. Download SAP NetWeaver
-    + Download the SAP NetWeaver
-
-    + unpack the downloaded RAR files
-    + copy the unpacked files/folders into the following directory:docker.sap.netweaver/7.51.SP02.opensuse.man/source
++ Download the SAP NetWeaver:
+      [https://tools.hana.ondemand.com/#abap](https://tools.hana.ondemand.com/#abap "https://tools.hana.ondemand.com/#abap")
++ unpack the downloaded RAR files
++ copy the unpacked files/folders into the following directory:
+      docker.sap.netweaver/7.51.SP02.opensuse.man/source
 
 ### II. Docker
 
@@ -30,10 +31,10 @@ vhcalnplci:/tmp/sapnw # ./install.sh
 ```
 
 #### 2. During the installation
-    + agree the license terms > yes
-    + enter/re-enter a password
-    + installation process... take a while...
-    + installation success message: "Installation of NPL successful"
++ agree the license terms > yes
++ enter/re-enter a password
++ installation process... take a while...
++ installation success message: "Installation of NPL successful"
 
 ### IV. Start/Stop SAP NetWeaver
 
