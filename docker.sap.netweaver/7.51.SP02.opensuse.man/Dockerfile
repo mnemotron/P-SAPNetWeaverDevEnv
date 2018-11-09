@@ -42,7 +42,7 @@ RUN zypper --non-interactive install --replacefiles \
 # (universal unique identifiers (UUID) generation daemon, essential for creating database keys, see SAP Note 1310037)
 RUN mkdir /run/uuidd && \
     zypper --non-interactive install --replacefiles uuidd && \
-    chown uuidd /var/run/uuidd && /usr/sbin/uui
+    chown uuidd /var/run/uuidd && /usr/sbin/uuidd
 
 ## ports
 # 8000/TCP  (HTTP)
