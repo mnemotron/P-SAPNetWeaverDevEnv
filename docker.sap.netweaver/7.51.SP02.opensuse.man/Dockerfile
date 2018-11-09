@@ -26,7 +26,6 @@ ENV LANGUAGE en_US.UTF-8
 # tcsh         (c shell)
 # iputils      (ping for host check)
 # net-tools    (contains ifconfig for host check)
-# uuidd        (universal unique identifiers (UUID) generation daemon, essential for creating database keys, see SAP Note 1310037)
 RUN zypper --non-interactive install --replacefiles \
       which \
       hostname \
@@ -37,11 +36,12 @@ RUN zypper --non-interactive install --replacefiles \
       iproute2 \
       unrar \
       tar \
-      uuidd \
       tcsh
 
-# run uuidd daemon
+# install and run uuidd daemon
+# (universal unique identifiers (UUID) generation daemon, essential for creating database keys, see SAP Note 1310037)
 RUN mkdir /run/uuidd && \
+    zypper --non-interactive install --replacefiles uuidd && \
     chown uuidd /var/run/uuidd && /usr/sbin/uui
 
 ## ports
