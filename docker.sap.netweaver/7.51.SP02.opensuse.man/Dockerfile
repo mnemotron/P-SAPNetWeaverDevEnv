@@ -27,16 +27,16 @@ ENV LANGUAGE en_US.UTF-8
 # iputils      (ping for host check)
 # net-tools    (contains ifconfig for host check)
 RUN zypper --non-interactive install --replacefiles \
-      which \
       hostname \
-      net-tools \
       iputils \
-      wget \
-      nano \
       iproute2 \
-      unrar \
+      nano \
+      net-tools \
       tar \
-      tcsh
+      tcsh \
+      unrar \
+      wget \
+      which
 
 # install and run uuidd daemon
 # (universal unique identifiers (UUID) generation daemon, essential for creating database keys, see SAP Note 1310037)
