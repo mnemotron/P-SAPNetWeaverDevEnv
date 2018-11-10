@@ -32,6 +32,7 @@ RUN zypper --non-interactive install --replacefiles \
       iproute2 \
       nano \
       net-tools \
+      systemd \
       tar \
       tcsh \
       unrar \
@@ -56,12 +57,19 @@ EXPOSE 8000/tcp \
        3200/tcp \
        3300/tcp
 
+## prepare installation
 # copy uncompressed sap netweaver files into the container
 COPY source /tmp/sapnw
 
-## workdir
-WORKDIR /tmp/sapnw
-
-## prepare installation
 # installation script must be executable
-RUN chmod +rx install.sh
+RUN chmod +rxw /tmp/sapnw/install.sh
+
+## services
+# initiate startsap command as service
+COPY service/sapnw.service /etc/systemd/system
+
+# autostart services
+#RUN systemctl enable uuidd sapnw
+
+## clean
+RUN zypper clean
