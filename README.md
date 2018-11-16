@@ -12,21 +12,27 @@
 
 ### II. Docker
 
-#### 1. Build Docker Image
+#### 1. Workdirectory
+```bash
+cd <SAPNetWaverDevEnv>/docker.sap.netweaver/7.51.SP02.opensuse.man
+```
+
+#### 2. Build Docker Image
 ```bash
 sudo docker build -t sapnw:7.51 .
 ```
 
-#### 2. Run Docker Image
+#### 3. Run Docker Image
 ```bash
 # --rm  (automatically remove the container when it exits)
 sudo docker run -p 8000:8000 -p 44300:44300 -p 3300:3300 -p 3200:3200 -p 8443:8443 -h vhcalnplci --name sapnw751 -it sapnw:7.51 /bin/bash
 ```
 
 ### III. Install SAP NetWeaver
+
 #### 1. Start installation
 ```bash
-# start uuid daemon
+# start uuid daemon (and wait a second)
 /usr/sbin/uuidd
 
 # start installation
@@ -48,12 +54,12 @@ vhcalnplci:/ # rm -R /tmp/sapnw
 
 #### 1. Start
 ```bash
-# start docker
+# start docker container
 sudo docker start -i sapnw751
 ```
 
 ```bash
-# start uuid daemon
+# start uuid daemon (and wait a second)
 /usr/sbin/uuidd
 
 # start SAP NetWeaver
@@ -73,4 +79,35 @@ exit
 
 ### V. Setup SAP Netweaver
 
-#### 1. License
+#### 1. User
+The following users are available to logon:
+
+User | Password | Description
+--- | --- | ---
+SAP* | Appl1ance | Administrator
+DEVELOPER | Appl1ance | Developer
+BWDEVELOPER | Appl1ance | Developer
+DDIC | Appl1ance | Data Dictionary
+
+#### 2. Clients
+
+Client | Description
+--- | ---
+000 | golden reference client for administrative activities
+001 | configuration client, can be used for developments
+
+#### 2. License
+Currently a developer license is valid for half a year.
+
+For an update, do the following steps:
+
++ open the SAP GUI and logon with user: **SAP*** and client: **000**
++ open transaction: **SLICENSE**
++ copy the active hardware key
++ open the SAP license page: [https://go.support.sap.com/minisap/#/minisap](https://go.support.sap.com/minisap/#/minisap "https://go.support.sap.com/minisap/#/minisap")
++ choose: **NPL - SAP NetWeaver 7.x (Sybase ASE)**
++ fill out all fields and use the copied active hardware key
++ save the generated license file: **NPL.txt**
++ go back to transaction: **SLICENSE**
++ delete the installed license from the table
++ install the new license and use the downloaded file: **NPL.txt**
