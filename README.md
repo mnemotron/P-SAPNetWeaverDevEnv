@@ -14,7 +14,8 @@
 
 #### 1. Workdirectory
 ```bash
-cd <SAPNetWaverDevEnv>/docker.sap.netweaver/7.51.SP02.opensuse.man
+# <SAPNetWeaverDevEnv>: change to your repository directory
+cd <SAPNetWeaverDevEnv>/docker.sap.netweaver/7.51.SP02.opensuse.man
 ```
 
 #### 2. Build Docker Image
